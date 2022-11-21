@@ -1,0 +1,74 @@
+.t-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 80vh;
+    background-color: #ffffff;
+    margin: 10% 10% 0 10%;
+    border-radius: 1em;
+}
+
+.t-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: 5%;
+    width: 100%;
+    background-color: #f8f2f7;
+    border-radius: 1em 1em 0 0;
+}
+
+.t-header-bullet {
+    display: flex;
+    height: 1em;
+    width: 1em;
+    border-radius: 100%;
+    margin: 0.5em;
+}
+
+.bullet-gr {
+    background-color: green;
+    margin-left: 1em;
+}
+
+.bullet-or {
+    background-color: orange;
+}
+
+.bullet-rd {
+    background-color: red;
+}
+
+.t-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 95%;
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 0 0 1em 1em;
+    font-size: small;
+}
+
+.t-row {
+    width: 100%;
+    background-color: pink;
+}
+
+.prompt {
+    color: red;
+    display: inline;
+    margin-right: 1em;
+}
+
+.t-input {
+    border: none;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    color: blue;
+}
