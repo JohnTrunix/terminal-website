@@ -2,13 +2,61 @@ import { useEffect, useState, useRef } from "react";
 
 import "../assets/css/app.css";
 
+let dir = " $";
+let historyId = 0;
+let history = [];
+
 function App() {
     let [input, setInput] = useState("");
+    let [prompt_user, setPromptUser] = useState("visitor@john-trunix:");
     const inputRef = useRef();
 
     useEffect(() => {
         inputRef.current.focus();
     }, []);
+
+    function parseInput(input) {
+        input = input.toLowerCase().trim();
+        input = input.split(" ");
+
+        if (input[0] === "help" || input[0] === "-h") {
+            if (input.length === 1) {
+                help(input);
+            } else {
+                error(input);
+            }
+        } else {
+            error(input);
+        }
+    }
+
+    function appendToHistory(input, prompt, value) {
+        history.push({
+            id: historyId,
+            input: input,
+            prompt: prompt,
+            value: value,
+        });
+        historyId++;
+    }
+
+    function help(input) {
+        const helpText = `
+        help, -h \t\t - show this help
+        clear \t\t - clear the terminal
+        `;
+        appendToHistory(true, prompt_user, input);
+        appendToHistory(false, prompt_user, helpText);
+    }
+
+    function error(input) {
+        appendToHistory(true, prompt_user, input.join(" "));
+        appendToHistory(
+            false,
+            prompt_user,
+            "bash: " + input.join(" ") + ": command or arguments are invalid"
+        );
+    }
 
     return (
         <div className="t-container">
@@ -18,8 +66,25 @@ function App() {
                 <div className="t-header-bullet bullet-rd"></div>
             </div>
             <div className="t-body">
+                {history.map(({ id, input, prompt, value }) => {
+                    if (input === true) {
+                        return (
+                            <div className="t-row" key={id}>
+                                <label className="prompt">{prompt}</label>
+                                <label className="t-value">{value}</label>
+                            </div>
+                        );
+                    } else {
+                        return (
+                            <div className="t-row" key={id}>
+                                <label className="t-value">{value}</label>
+                            </div>
+                        );
+                    }
+                })}
+
                 <div className="t-row">
-                    <label className="t-label">visitor@john-trunix: ~ $</label>
+                    <label className="prompt">{prompt_user + dir}</label>
                     <input
                         ref={inputRef}
                         className="t-input"
@@ -30,6 +95,7 @@ function App() {
                             if (e.key === "Enter") {
                                 // parse input
                                 // execute command
+                                parseInput(input);
                                 setInput("");
                             }
                         }}

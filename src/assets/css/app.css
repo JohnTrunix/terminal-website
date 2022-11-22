@@ -51,11 +51,13 @@
     background-color: #ffffff;
     border-radius: 0 0 1em 1em;
     font-size: small;
+    overflow: hidden scroll;
 }
 
 .t-row {
     width: 100%;
     background-color: pink;
+    white-space: pre-wrap;
 }
 
 .prompt {
@@ -71,4 +73,8 @@
     padding: 0;
     background: transparent;
     color: blue;
+}
+
+.t-value {
+    color: green;
 }
