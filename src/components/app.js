@@ -19,14 +19,30 @@ function App() {
         input = input.toLowerCase().trim();
         input = input.split(" ");
 
-        if (input[0] === "help" || input[0] === "-h") {
-            if (input.length === 1) {
-                help(input);
-            } else {
+        console.log(input[0]);
+        switch (input[0]) {
+            case "help":
+            case "-h":
+                if (input.length === 1) {
+                    help(input);
+                } else {
+                    error(input);
+                }
+                break;
+            case "clear":
+            case "-c":
+                if (input.length === 1) {
+                    clear(input);
+                } else {
+                    error(input);
+                }
+                break;
+            case "cd":
+                cd(input);
+                break;
+            default:
                 error(input);
-            }
-        } else {
-            error(input);
+                break;
         }
     }
 
@@ -43,7 +59,8 @@ function App() {
     function help(input) {
         const helpText = `
         help, -h \t\t - show this help
-        clear \t\t - clear the terminal
+        clear, -c \t\t - clear the terminal
+        cd \t\t\t - change directory
         `;
         appendToHistory(true, prompt_user, input);
         appendToHistory(false, prompt_user, helpText);
@@ -57,6 +74,17 @@ function App() {
             "bash: " + input.join(" ") + ": command or arguments are invalid"
         );
     }
+
+    function clear() {
+        history = [];
+        historyId = 0;
+    }
+
+    function cd(input) {
+        console.log(input.join(" "));
+    }
+
+    function nano() {}
 
     return (
         <div className="t-container">
@@ -92,7 +120,7 @@ function App() {
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         onKeyDown={(e) => {
-                            if (e.key === "Enter") {
+                            if ((e.key === "Enter") & (input !== "")) {
                                 // parse input
                                 // execute command
                                 parseInput(input);
