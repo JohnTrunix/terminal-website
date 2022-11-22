@@ -12,6 +12,10 @@ function App() {
     const inputRef = useRef();
 
     useEffect(() => {
+        inputRef.current.scrollIntoView();
+    }, [JSON.stringify(history)]);
+
+    useEffect(() => {
         inputRef.current.focus();
     }, []);
 
@@ -19,7 +23,6 @@ function App() {
         input = input.toLowerCase().trim();
         input = input.split(" ");
 
-        console.log(input[0]);
         switch (input[0]) {
             case "help":
             case "-h":
@@ -93,7 +96,7 @@ function App() {
                 <div className="t-header-bullet bullet-or"></div>
                 <div className="t-header-bullet bullet-rd"></div>
             </div>
-            <div className="t-body">
+            <div className="t-body" onClick={() => inputRef.current.focus()}>
                 {history.map(({ id, input, prompt, value }) => {
                     if (input === true) {
                         return (
